@@ -1,0 +1,8 @@
+#Compiled files
+target/
+
+#IntelliJ files
+*.iml
+
+#IntelliJ dirs
+.idea/
