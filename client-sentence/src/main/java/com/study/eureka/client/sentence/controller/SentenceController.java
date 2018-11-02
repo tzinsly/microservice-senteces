@@ -15,8 +15,10 @@ import java.util.List;
 @Controller
 public class SentenceController {
 
+    /*@Autowired
+    private DiscoveryClient discoveryClient;*/
     @Autowired
-    private DiscoveryClient discoveryClient;
+    private RestTemplate restTemplate;
 
     /**
      * Display a small list of Sentences to the caller:
@@ -41,11 +43,11 @@ public class SentenceController {
         try{
             sentence =
                     String.format("%s %s %s %s %s.",
-                            getWord("CLIENT-SUBJECT"),
-                            getWord("CLIENT-VERB"),
-                            getWord("CLIENT-ARTICLE"),
-                            getWord("CLIENT-ADJECTIVE"),
-                            getWord("CLIENT-NOUN") );
+                            getWord("SUBJECT"),
+                            getWord("VERB"),
+                            getWord("ARTICLE"),
+                            getWord("ADJECTIVE"),
+                            getWord("NOUN") );
         } catch ( Exception e ) {
             System.out.println(e);
         }
@@ -57,13 +59,13 @@ public class SentenceController {
      * of speech is indicated by the given service / client ID:
      */
     public String getWord(String service) {
-        List<ServiceInstance> list = discoveryClient.getInstances(service);
+        /*List<ServiceInstance> list = discoveryClient.getInstances(service);
         if (list != null && list.size() > 0 ) {
             URI uri = list.get(0).getUri();
             if (uri !=null ) {
                 return (new RestTemplate()).getForObject(uri,String.class);
             }
-        }
-        return null;
+        }*/
+        return restTemplate.getForObject( "http://" + service, String.class);
     }
 }
